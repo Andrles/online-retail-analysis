@@ -71,11 +71,3 @@ online-retail-analysis/
 ├── requirements.txt
 └── README.md
 ```
-
-## Как запустить
-
-```bash
-python3 -m venv .venv
-.venv/bin/python -m pip install -r requirements.txt
-.venv/bin/python analysis.py
-```
