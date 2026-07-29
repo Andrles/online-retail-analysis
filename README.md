@@ -1,5 +1,9 @@
 # Анализ продаж интернет-магазина
 
+[![Открыть в Google Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Andrles/online-retail-analysis/blob/main/analysis.ipynb)
+
+Ноутбук можно запустить в браузере через кнопку выше — установка Python не требуется.
+
 ## Цель проекта
 
 Исследовать транзакции интернет-магазина и ответить на практические вопросы бизнеса:
