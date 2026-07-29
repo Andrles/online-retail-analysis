@@ -1,4 +1,7 @@
+from io import BytesIO
 from pathlib import Path
+from urllib.request import urlopen
+from zipfile import ZipFile
 
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -6,14 +9,27 @@ import seaborn as sns
 
 
 DATA_PATH = Path("data/Online Retail.xlsx")
+DATA_URL = "https://archive.ics.uci.edu/static/public/352/online+retail.zip"
+
+
+def download_data(path: Path) -> None:
+    """Скачивает исходные данные из UCI при первом запуске проекта."""
+    print("Исходный файл не найден. Скачиваю набор данных из UCI...")
+    path.parent.mkdir(exist_ok=True)
+
+    with urlopen(DATA_URL) as response:
+        archive = ZipFile(BytesIO(response.read()))
+        xlsx_file = next(name for name in archive.namelist() if name.endswith(".xlsx"))
+        with archive.open(xlsx_file) as source, path.open("wb") as target:
+            target.write(source.read())
+
+    print(f"Данные сохранены в {path}")
 
 
 def load_and_prepare_data(path: Path) -> pd.DataFrame:
     """Загружает данные и оставляет только корректные продажи."""
     if not path.exists():
-        raise FileNotFoundError(
-            "Не найден data/Online Retail.xlsx. Поместите скачанный файл в папку data/."
-        )
+        download_data(path)
 
     df = pd.read_excel(path)
     df.columns = df.columns.str.strip()
